@@ -1,15 +1,17 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import background from 'assets/background.svg';
 import Heading from 'components/atoms/Heading/Heading';
-import Button from 'components/Button/Button';
+import Button from 'components/atoms/Button/Button';
+import ModelGSM from 'components/organisms/ModelGSM/ModelGSM';
 import { Link, Element } from 'react-scroll';
+import { MapInteractionCSS } from 'react-map-interaction';
+import ItemModal from 'components/organisms/ItemModal/ItemModal';
 
 const StyledWrapper = styled.div`
   background-image: url(${background});
   background-repeat: no-repeat;
   background-position: 50% 50%;
-  background-size: 100%;
   height: 100vh;
   background-size: cover;
 `;
@@ -29,26 +31,59 @@ const StyledButton = styled(Button)`
 
 const ModelWrapper = styled(Element)`
   height: 100vh;
+  width: 100vw;
+  background-repeat: no-repeat;
+  margin: 2rem 6rem 0 1rem;
+
+  ${({ styledBackground }) =>
+    styledBackground &&
+    css`
+      -webkit-filter: blur(3px);
+      -moz-filter: blur(3px);
+      -o-filter: blur(3px);
+      -ms-filter: blur(3px);
+      filter: blur(3px);
+    `}
 `;
 
-const Home = () => (
-  <>
-    <StyledWrapper>
-      <StyledHeading big>Model sieci komórkowej 2G/3G/4G</StyledHeading>
+class Home extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      item: null,
+      checkedItem: ``,
+    };
+  }
+  // eslint-disable-next-line
+  checkItem(checkedItem) {
+    this.setState({ checkedItem: checkedItem });
+  }
 
-      <Link
-        activeClass="active"
-        to="model"
-        spy={true}
-        smooth={true}
-        offset={0}
-        duration={500}
-      >
-        <StyledButton>Zaczynajmy</StyledButton>
-      </Link>
-    </StyledWrapper>
-    <ModelWrapper id="model">MODEL</ModelWrapper>
-  </>
-);
+  render() {
+    return (
+      <>
+        <StyledWrapper>
+          <StyledHeading big>Model sieci komórkowej 2G/3G/4G</StyledHeading>
+
+          <Link
+            activeClass="active"
+            to="model"
+            spy={true}
+            smooth={true}
+            offset={0}
+            duration={500}
+          >
+            <StyledButton>Zaczynajmy</StyledButton>
+          </Link>
+        </StyledWrapper>
+        <ModelWrapper id="model" styledBackground={this.state.checkedItem}>
+          <MapInteractionCSS>
+            <ModelGSM setCheckedItem={this.checkItem} />
+          </MapInteractionCSS>
+        </ModelWrapper>
+      </>
+    );
+  }
+}
 
 export default Home;
