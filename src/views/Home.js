@@ -7,6 +7,7 @@ import ModelGSM from 'components/organisms/ModelGSM/ModelGSM';
 import { Link, Element } from 'react-scroll';
 import { MapInteractionCSS } from 'react-map-interaction';
 import ItemModal from 'components/organisms/ItemModal/ItemModal';
+import API from '../utils/API';
 
 const StyledWrapper = styled.div`
   background-image: url(${background});
@@ -33,8 +34,7 @@ const ModelWrapper = styled(Element)`
   height: 100vh;
   width: 100vw;
   background-repeat: no-repeat;
-  margin: 2rem 6rem 0 1rem;
-
+  margin: 1rem 6rem 0 1rem;
   ${({ styledBackground }) =>
     styledBackground &&
     css`
@@ -43,20 +43,29 @@ const ModelWrapper = styled(Element)`
       -o-filter: blur(3px);
       -ms-filter: blur(3px);
       filter: blur(3px);
-    `}
+    `};
 `;
 
 class Home extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      item: null,
-      checkedItem: ``,
+      item: {
+        shortcut: ''
+      },
+      checkedItem: null
     };
   }
   // eslint-disable-next-line
   checkItem(checkedItem) {
     this.setState({ checkedItem: checkedItem });
+    checkedItem ? this.getItem(checkedItem) : this.setState({ item: null });
+  }
+
+  getItem(checkedItem) {
+    API.get(`/interfaces/getByShortcut/${checkedItem}`).then(res => {
+      this.setState({ item: res.data });
+    });
   }
 
   render() {
@@ -76,6 +85,9 @@ class Home extends React.Component {
             <StyledButton>Zaczynajmy</StyledButton>
           </Link>
         </StyledWrapper>
+        {this.state.checkedItem && (
+          <ItemModal item={this.state.item} isOpenModal={this.checkItem} />
+        )}
         <ModelWrapper id="model" styledBackground={this.state.checkedItem}>
           <MapInteractionCSS>
             <ModelGSM setCheckedItem={this.checkItem} />
