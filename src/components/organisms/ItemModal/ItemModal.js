@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import ModalButton from 'components/atoms/ModalButton/ModalButton';
 import Heading from 'components/atoms/Heading/Heading';
 import PropTypes from 'prop-types';
+import ProtocolModal from 'components/organisms/ProtocolModal/ProtocolModal';
 
 const StyledWrapper = styled.div`
   top: 150%;
@@ -14,7 +15,7 @@ const StyledWrapper = styled.div`
   height: 75vh;
   background-color: white;
   position: absolute;
-  z-index: 10;
+  z-index: 3;
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
 `;
@@ -51,39 +52,56 @@ const Protocol = styled.li`
     `};
 `;
 
-const ItemModal = ({ item, isOpenModal }) => (
-  <StyledWrapper>
-    {item ? (
-      <>
-        <StyledHeadingName big>{item.name}</StyledHeadingName>
-        <Description>{item.description}</Description>
+const ItemModal = ({ item, isOpenModal }) => {
+  const [isProtocolModalOpen, setProtocolModalOpen] = useState(false);
 
-        {item.protocols && (
-          <ProtocolsList protocols={item.protocols}>
-            {item.protocols.map(
-              ({
-                id,
-                name,
-                shortcut,
-                link,
-                description,
-                standarizationDocument
-              }) => (
-                <Protocol key={id}>{shortcut}</Protocol>
-              )
-            )}
-          </ProtocolsList>
-        )}
-      </>
-    ) : (
-      <StyledHeadingName big>Brak danych</StyledHeadingName>
-    )}
+  return (
+    <StyledWrapper>
+      {item ? (
+        <>
+          <StyledHeadingName big>{item.name}</StyledHeadingName>
+          <Description>{item.description}</Description>
 
-    <StyledModalButton onClick={() => isOpenModal('')}>
-      Zamknij
-    </StyledModalButton>
-  </StyledWrapper>
-);
+          {item.protocols && (
+            <ProtocolsList protocols={item.protocols}>
+              {item.protocols.map(
+                ({
+                  name,
+                  shortcut,
+                  description,
+                  link,
+                  standardizationDocument
+                }) => (
+                  <Protocol
+                    onClick={() => setProtocolModalOpen(!isProtocolModalOpen)}
+                    key={shortcut}
+                  >
+                    {shortcut}
+                    {isProtocolModalOpen && (
+                      <ProtocolModal
+                        key={shortcut}
+                        name={name}
+                        description={description}
+                        link={link}
+                        standardizationDocument={standardizationDocument}
+                      />
+                    )}
+                  </Protocol>
+                )
+              )}
+            </ProtocolsList>
+          )}
+        </>
+      ) : (
+        <StyledHeadingName big>Brak danych</StyledHeadingName>
+      )}
+
+      <StyledModalButton onClick={() => isOpenModal('')}>
+        Zamknij
+      </StyledModalButton>
+    </StyledWrapper>
+  );
+};
 
 ItemModal.propTypes = {
   item: PropTypes.object.isRequired,

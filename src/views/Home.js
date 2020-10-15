@@ -8,7 +8,7 @@ import { Link, Element } from 'react-scroll';
 import { MapInteractionCSS } from 'react-map-interaction';
 import ItemModal from 'components/organisms/ItemModal/ItemModal';
 import API from '../utils/API';
-
+import Search from 'components/organisms/Search/Search';
 const StyledWrapper = styled.div`
   background-image: url(${background});
   background-repeat: no-repeat;
@@ -34,6 +34,7 @@ const ModelWrapper = styled(Element)`
   height: 100vh;
   width: 100vw;
   background-repeat: no-repeat;
+  padding: 2rem 0 3rem 1rem;
   margin: 1rem 6rem 0 1rem;
   ${({ styledBackground }) =>
     styledBackground &&
@@ -46,6 +47,10 @@ const ModelWrapper = styled(Element)`
     `};
 `;
 
+const StyledSearch = styled(Search)`
+  width: 13%;
+`;
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
@@ -53,27 +58,39 @@ class Home extends React.Component {
       item: {
         shortcut: ''
       },
+
       checkedItem: null
     };
   }
   // eslint-disable-next-line
-  checkItem(checkedItem) {
+  checkItem = checkedItem => {
     this.setState({ checkedItem: checkedItem });
     checkedItem ? this.getItem(checkedItem) : this.setState({ item: null });
-  }
+  };
 
-  getItem(checkedItem) {
+  getItem = checkedItem => {
     API.get(`/interfaces/getByShortcut/${checkedItem}`).then(res => {
       this.setState({ item: res.data });
     });
+  };
+
+  updateSearch(event) {
+    this.setState({ searchItem: event.target.value });
+  }
+
+  searchingFor(searchItem) {
+    return function(x) {
+      return x.toLowerCase().includes(searchItem.toLowerCase()) || !searchItem;
+    };
   }
 
   render() {
+    const { item, checkedItem } = this.state;
+
     return (
       <>
         <StyledWrapper>
           <StyledHeading big>Model sieci komórkowej 2G/3G/4G</StyledHeading>
-
           <Link
             activeClass="active"
             to="model"
@@ -85,10 +102,9 @@ class Home extends React.Component {
             <StyledButton>Zaczynajmy</StyledButton>
           </Link>
         </StyledWrapper>
-        {this.state.checkedItem && (
-          <ItemModal item={this.state.item} isOpenModal={this.checkItem} />
-        )}
-        <ModelWrapper id="model" styledBackground={this.state.checkedItem}>
+        {checkedItem && <ItemModal item={item} isOpenModal={this.checkItem} />}
+        <ModelWrapper id="model" styledBackground={checkedItem}>
+          <StyledSearch setCheckedItem={this.checkItem} />
           <MapInteractionCSS>
             <ModelGSM setCheckedItem={this.checkItem} />
           </MapInteractionCSS>
