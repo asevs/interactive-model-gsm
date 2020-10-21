@@ -26,6 +26,8 @@ const StyledHeadingName = styled(Heading)`
 
 const Description = styled.p`
   margin: 5rem 0 0 0;
+  white-space: pre-line;
+  text-align: justify;
 `;
 
 const StyledModalButton = styled(ModalButton)`
@@ -45,15 +47,23 @@ const Protocol = styled.li`
   text-align: center;
   font-size: 3rem;
   background-color: #eeeeee;
-  ${({ key }) =>
-    key % 2 === 0 &&
+  :hover {
+    cursor: pointer;
+    background-color: gray;
+  }
+  ${({ id }) =>
+    id % 2 === 0 &&
     css`
       background-color: #f8f8f8;
     `};
 `;
 
 const ItemModal = ({ item, isOpenModal }) => {
-  const [isProtocolModalOpen, setProtocolModalOpen] = useState(false);
+  const [isProtocolToModalOpen, setProtocolToModalOpen] = useState();
+
+  function isProtocolModalOpen() {
+    setProtocolToModalOpen(null);
+  }
 
   return (
     <StyledWrapper>
@@ -64,32 +74,24 @@ const ItemModal = ({ item, isOpenModal }) => {
 
           {item.protocols && (
             <ProtocolsList protocols={item.protocols}>
-              {item.protocols.map(
-                ({
-                  name,
-                  shortcut,
-                  description,
-                  link,
-                  standardizationDocument
-                }) => (
-                  <Protocol
-                    onClick={() => setProtocolModalOpen(!isProtocolModalOpen)}
-                    key={shortcut}
-                  >
-                    {shortcut}
-                    {isProtocolModalOpen && (
-                      <ProtocolModal
-                        key={shortcut}
-                        name={name}
-                        description={description}
-                        link={link}
-                        standardizationDocument={standardizationDocument}
-                      />
-                    )}
-                  </Protocol>
-                )
-              )}
+              {item.protocols.map(protocol => (
+                <Protocol
+                  onClick={() => setProtocolToModalOpen(protocol.shortcut)}
+                  id={item.protocols.indexOf(protocol)}
+                  key={protocol.shortcut}
+                >
+                  {protocol.shortcut}
+                </Protocol>
+              ))}
             </ProtocolsList>
+          )}
+          {isProtocolToModalOpen != null && (
+            <ProtocolModal
+              protocol={item.protocols.filter(
+                protocol => protocol.shortcut === isProtocolToModalOpen
+              )}
+              isModalOpen={() => isProtocolModalOpen()}
+            />
           )}
         </>
       ) : (

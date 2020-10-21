@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import Input from 'components/atoms/Input/Input';
 
 const items = [
-  'lur',
+  'Iur',
   'Nb',
   'Mc',
   'Nc/E',
-  'lub',
+  'Iub',
   'Abis',
-  'lur-g',
+  'Iur-g',
   'X2',
   'S1-MME',
   'S1-U',
@@ -18,7 +18,7 @@ const items = [
   'Gn',
   'Ga',
   'S5',
-  'luh',
+  'Iuh',
   'Mb',
   'Mp',
   'Mr',
@@ -42,9 +42,9 @@ const items = [
   'TDM',
   'Le',
   'Lg',
-  'lu-BC',
+  'Iu-BC',
   'Gmb',
-  'lupc',
+  'Iupc',
   'CBC-BSC',
   'GERAN',
   'UTRAN',
@@ -55,11 +55,11 @@ const items = [
   'LTE',
   'S1-MME',
   'Gd',
-  'lu-CS',
+  'Iu-CS',
   'Gb',
   'A/Ater',
-  'lur-g',
-  'lu-PS',
+  'Iur-g',
+  'Iu-PS',
   'S101',
   'S13',
   'S12',
@@ -166,7 +166,7 @@ const SearchInput = styled(Input)`
     `}
 `;
 
-const Search = ({ setCheckedItem }) => {
+const Search = ({ setCheckedItem, setCSSSearchItem }) => {
   const [searchItem, setSearchItem] = useState('');
 
   return (
@@ -176,14 +176,21 @@ const Search = ({ setCheckedItem }) => {
         value={searchItem}
         onChange={e => setSearchItem(e.target.value)}
       />
-      {searchItem.length >= 2 && (
+      {searchItem.length >= 1 && (
         <SearchList>
           {items.filter(searchingFor(searchItem)).map(item => (
             <SearchListItem
-              key={item}
+              onMouseEnter={() => {
+                setCSSSearchItem(item);
+              }}
+              onMouseLeave={() => {
+                setCSSSearchItem('');
+              }}
+              key={item.id}
               onClick={() => {
                 setCheckedItem(item);
                 setSearchItem('');
+                setCSSSearchItem('');
               }}
             >
               {item}

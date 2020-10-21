@@ -11,6 +11,11 @@ const ModalButton = styled.div`
   :active {
     background: #b9b9b9;
   }
+
+  :hover {
+    cursor: pointer;
+  }
+
 `;
 
 export default ModalButton;

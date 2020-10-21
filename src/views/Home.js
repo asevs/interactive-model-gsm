@@ -5,7 +5,6 @@ import Heading from 'components/atoms/Heading/Heading';
 import Button from 'components/atoms/Button/Button';
 import ModelGSM from 'components/organisms/ModelGSM/ModelGSM';
 import { Link, Element } from 'react-scroll';
-import { MapInteractionCSS } from 'react-map-interaction';
 import ItemModal from 'components/organisms/ItemModal/ItemModal';
 import API from '../utils/API';
 import Search from 'components/organisms/Search/Search';
@@ -59,19 +58,22 @@ class Home extends React.Component {
         shortcut: ''
       },
 
-      checkedItem: null
+      checkedItem: null,
+      searchCSSItem: null
     };
   }
-  // eslint-disable-next-line
+
   checkItem = checkedItem => {
     this.setState({ checkedItem: checkedItem });
     checkedItem ? this.getItem(checkedItem) : this.setState({ item: null });
   };
 
   getItem = checkedItem => {
-    API.get(`/interfaces/getByShortcut/${checkedItem}`).then(res => {
-      this.setState({ item: res.data });
-    });
+    API.post(`/interfaces/getByShortcut`, { shortcut: checkedItem }).then(
+      res => {
+        this.setState({ item: res.data });
+      }
+    );
   };
 
   updateSearch(event) {
@@ -84,8 +86,12 @@ class Home extends React.Component {
     };
   }
 
+  setCSSSearchItem = item => {
+    this.setState({ searchCSSItem: item });
+  };
+
   render() {
-    const { item, checkedItem } = this.state;
+    const { item, checkedItem, searchCSSItem } = this.state;
 
     return (
       <>
@@ -104,10 +110,14 @@ class Home extends React.Component {
         </StyledWrapper>
         {checkedItem && <ItemModal item={item} isOpenModal={this.checkItem} />}
         <ModelWrapper id="model" styledBackground={checkedItem}>
-          <StyledSearch setCheckedItem={this.checkItem} />
-          <MapInteractionCSS>
-            <ModelGSM setCheckedItem={this.checkItem} />
-          </MapInteractionCSS>
+          <StyledSearch
+            setCheckedItem={this.checkItem}
+            setCSSSearchItem={this.setCSSSearchItem}
+          />
+          <ModelGSM
+            setCheckedItem={this.checkItem}
+            setCSSSearchItem={searchCSSItem}
+          />
         </ModelWrapper>
       </>
     );

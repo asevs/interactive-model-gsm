@@ -16,6 +16,7 @@ const StyledWrapper = styled.div`
   position: absolute;
   z-index: 10;
   padding: 0 4vw 0 4vw;
+  cursor: auto;
 `;
 
 const StyledHeadingName = styled(Heading)`
@@ -31,26 +32,23 @@ const StyledModalButton = styled(ModalButton)`
   position: absolute;
   bottom: 5rem;
   left: 39%;
+  font-size: 2.3rem;
 `;
 
-const ProtocolModal = ({
-  name,
-  closeModal,
-  description,
-  link,
-  standardizationDocument
-}) => (
+const ProtocolModal = ({ protocol, isModalOpen }) => (
   <StyledWrapper>
-    <StyledHeadingName big>{name}</StyledHeadingName>
-    <Description>{description}</Description>
-    <a href={link}>{standardizationDocument}</a>
+    <StyledHeadingName big>{protocol[0].name}</StyledHeadingName>
+    <Description>{protocol[0].description}</Description>
+    <a href={protocol[0].link} target="_blank" rel="noopener noreferrer">
+      {protocol[0].standardizationDocument}
+    </a>
 
-    <StyledModalButton>Zamknij</StyledModalButton>
+    <StyledModalButton onClick={() => isModalOpen()}>Zamknij</StyledModalButton>
   </StyledWrapper>
 );
 
 ProtocolModal.propTypes = {
-  name: PropTypes.string.isRequired,
+  name: PropTypes.string,
   description: PropTypes.string,
   link: PropTypes.string,
   closeModal: PropTypes.func,
