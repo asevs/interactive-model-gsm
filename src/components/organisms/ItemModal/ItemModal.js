@@ -18,6 +18,12 @@ const StyledWrapper = styled.div`
   z-index: 3;
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
+
+  ${({ setHeight }) =>
+    setHeight &&
+    css`
+      height: 45vh;
+    `};
 `;
 
 const StyledHeadingName = styled(Heading)`
@@ -41,12 +47,30 @@ const ProtocolsList = styled.ul`
   list-style-type: none;
   width: 25rem;
   padding: 0;
+  overflow-y: auto;
+  height: 200px;
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const Protocol = styled.li`
   text-align: center;
   font-size: 3rem;
-  background-color: #eeeeee;
+  background-color: #f8f8f8;
   :hover {
     cursor: pointer;
     background-color: gray;
@@ -54,7 +78,7 @@ const Protocol = styled.li`
   ${({ id }) =>
     id % 2 === 0 &&
     css`
-      background-color: #f8f8f8;
+      background-color: #eeeeee;
     `};
 `;
 
@@ -65,8 +89,14 @@ const ItemModal = ({ item, isOpenModal }) => {
     setProtocolToModalOpen(null);
   }
 
+  function CheckDescription(description, protocols) {
+    if (protocols.length === 0 && `${description}`.length < 400) return true;
+  }
+
   return (
-    <StyledWrapper>
+    <StyledWrapper
+      setHeight={CheckDescription(item.description, item.protocols)}
+    >
       {item ? (
         <>
           <StyledHeadingName big>{item.name}</StyledHeadingName>

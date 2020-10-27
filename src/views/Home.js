@@ -55,17 +55,17 @@ class Home extends React.Component {
     super(props);
     this.state = {
       item: {
-        shortcut: ''
+        shortcut: '',
+        protocols: []
       },
 
-      checkedItem: null,
       searchCSSItem: null
     };
   }
 
   checkItem = checkedItem => {
-    this.setState({ checkedItem: checkedItem });
-    checkedItem ? this.getItem(checkedItem) : this.setState({ item: null });
+    this.setState({ item: checkedItem });
+    checkedItem && this.getItem(checkedItem);
   };
 
   getItem = checkedItem => {
@@ -108,7 +108,7 @@ class Home extends React.Component {
             <StyledButton>Zaczynajmy</StyledButton>
           </Link>
         </StyledWrapper>
-        {checkedItem && <ItemModal item={item} isOpenModal={this.checkItem} />}
+        {item.name && <ItemModal item={item} isOpenModal={this.checkItem} />}
         <ModelWrapper id="model" styledBackground={checkedItem}>
           <StyledSearch
             setCheckedItem={this.checkItem}

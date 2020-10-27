@@ -101,7 +101,6 @@ const items = [
   'BM-SC',
   'MMS-SC',
   'CBC',
-  'CS_MGW',
   'HSS/Auc',
   'GMSC Server',
   'BG',
