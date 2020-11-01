@@ -11,19 +11,12 @@ const StyledWrapper = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 35vw;
-  height: 75vh;
+  width: 30vw;
   background-color: white;
   position: absolute;
   z-index: 3;
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
-
-  ${({ setHeight }) =>
-    setHeight &&
-    css`
-      height: 45vh;
-    `};
 `;
 
 const StyledHeadingName = styled(Heading)`
@@ -37,9 +30,8 @@ const Description = styled.p`
 `;
 
 const StyledModalButton = styled(ModalButton)`
-  position: absolute;
-  bottom: 5rem;
-  left: 39%;
+  width: 150px;
+  margin: 5rem auto 2rem auto;
 `;
 
 const ProtocolsList = styled.ul`
@@ -47,8 +39,8 @@ const ProtocolsList = styled.ul`
   list-style-type: none;
   width: 25rem;
   padding: 0;
-  overflow-y: auto;
   height: 200px;
+  overflow-y: auto;
 
   ::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -89,20 +81,13 @@ const ItemModal = ({ item, isOpenModal }) => {
     setProtocolToModalOpen(null);
   }
 
-  function CheckDescription(description, protocols) {
-    if (protocols.length === 0 && `${description}`.length < 400) return true;
-  }
-
   return (
-    <StyledWrapper
-      setHeight={CheckDescription(item.description, item.protocols)}
-    >
-      {item ? (
-        <>
+    <StyledWrapper>
+
           <StyledHeadingName big>{item.name}</StyledHeadingName>
           <Description>{item.description}</Description>
 
-          {item.protocols && (
+          {item.protocols.length != 0 && (
             <ProtocolsList protocols={item.protocols}>
               {item.protocols.map(protocol => (
                 <Protocol
@@ -123,11 +108,6 @@ const ItemModal = ({ item, isOpenModal }) => {
               isModalOpen={() => isProtocolModalOpen()}
             />
           )}
-        </>
-      ) : (
-        <StyledHeadingName big>Brak danych</StyledHeadingName>
-      )}
-
       <StyledModalButton onClick={() => isOpenModal('')}>
         Zamknij
       </StyledModalButton>

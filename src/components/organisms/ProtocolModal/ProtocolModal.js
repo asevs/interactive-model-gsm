@@ -10,11 +10,11 @@ const StyledWrapper = styled.div`
   left: 0;
   right: 0;
   margin: 0 auto;
-  width: 35vw;
-  height: 75vh;
+  width: 29vw;
   background-color: white;
   position: absolute;
-  z-index: 10;
+  z-index: 4;
+  box-shadow: 0 0 10px 0.5px black;
   padding: 0 4vw 0 4vw;
   cursor: auto;
 `;
@@ -29,10 +29,8 @@ const Description = styled.p`
 `;
 
 const StyledModalButton = styled(ModalButton)`
-  position: absolute;
-  bottom: 5rem;
-  left: 39%;
-  font-size: 2.3rem;
+  width: 150px;
+  margin: 5rem auto 2rem auto;
 `;
 
 const ProtocolModal = ({ protocol, isModalOpen }) => (
