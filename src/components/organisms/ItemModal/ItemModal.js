@@ -25,8 +25,27 @@ const StyledHeadingName = styled(Heading)`
 
 const Description = styled.p`
   margin: 5rem 0 0 0;
+  padding: 0 1em 0 0;
   white-space: pre-line;
   text-align: justify;
+  max-height: 45vh;
+  overflow-y: auto;
+
+  ::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  }
 `;
 
 const StyledModalButton = styled(ModalButton)`
@@ -83,31 +102,30 @@ const ItemModal = ({ item, isOpenModal }) => {
 
   return (
     <StyledWrapper>
+      <StyledHeadingName big>{item.name}</StyledHeadingName>
+      <Description>{item.description}</Description>
 
-          <StyledHeadingName big>{item.name}</StyledHeadingName>
-          <Description>{item.description}</Description>
-
-          {item.protocols.length != 0 && (
-            <ProtocolsList protocols={item.protocols}>
-              {item.protocols.map(protocol => (
-                <Protocol
-                  onClick={() => setProtocolToModalOpen(protocol.shortcut)}
-                  id={item.protocols.indexOf(protocol)}
-                  key={protocol.shortcut}
-                >
-                  {protocol.shortcut}
-                </Protocol>
-              ))}
-            </ProtocolsList>
+      {item.protocols.length != 0 && (
+        <ProtocolsList protocols={item.protocols}>
+          {item.protocols.map(protocol => (
+            <Protocol
+              onClick={() => setProtocolToModalOpen(protocol.shortcut)}
+              id={item.protocols.indexOf(protocol)}
+              key={protocol.shortcut}
+            >
+              {protocol.shortcut}
+            </Protocol>
+          ))}
+        </ProtocolsList>
+      )}
+      {isProtocolToModalOpen != null && (
+        <ProtocolModal
+          protocol={item.protocols.filter(
+            protocol => protocol.shortcut === isProtocolToModalOpen
           )}
-          {isProtocolToModalOpen != null && (
-            <ProtocolModal
-              protocol={item.protocols.filter(
-                protocol => protocol.shortcut === isProtocolToModalOpen
-              )}
-              isModalOpen={() => isProtocolModalOpen()}
-            />
-          )}
+          isModalOpen={() => isProtocolModalOpen()}
+        />
+      )}
       <StyledModalButton onClick={() => isOpenModal('')}>
         Zamknij
       </StyledModalButton>
