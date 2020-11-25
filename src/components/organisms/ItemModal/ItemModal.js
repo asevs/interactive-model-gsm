@@ -37,7 +37,7 @@ const StyledModalButton = styled(ModalButton)`
 const ProtocolsList = styled.ul`
   margin: 8rem auto 0 auto;
   list-style-type: none;
-  width: 25rem;
+  width: 60%;
   padding: 0;
   height: 200px;
   overflow-y: auto;
@@ -83,31 +83,30 @@ const ItemModal = ({ item, isOpenModal }) => {
 
   return (
     <StyledWrapper>
+      <StyledHeadingName big>{item.name}</StyledHeadingName>
+      <Description>{item.description}</Description>
 
-          <StyledHeadingName big>{item.name}</StyledHeadingName>
-          <Description>{item.description}</Description>
-
-          {item.protocols.length != 0 && (
-            <ProtocolsList protocols={item.protocols}>
-              {item.protocols.map(protocol => (
-                <Protocol
-                  onClick={() => setProtocolToModalOpen(protocol.shortcut)}
-                  id={item.protocols.indexOf(protocol)}
-                  key={protocol.shortcut}
-                >
-                  {protocol.shortcut}
-                </Protocol>
-              ))}
-            </ProtocolsList>
+      {item.protocols.length != 0 && (
+        <ProtocolsList protocols={item.protocols}>
+          {item.protocols.map(protocol => (
+            <Protocol
+              onClick={() => setProtocolToModalOpen(protocol.shortcut)}
+              id={item.protocols.indexOf(protocol)}
+              key={protocol.shortcut}
+            >
+              {protocol.shortcut}
+            </Protocol>
+          ))}
+        </ProtocolsList>
+      )}
+      {isProtocolToModalOpen != null && (
+        <ProtocolModal
+          protocol={item.protocols.filter(
+            protocol => protocol.shortcut === isProtocolToModalOpen
           )}
-          {isProtocolToModalOpen != null && (
-            <ProtocolModal
-              protocol={item.protocols.filter(
-                protocol => protocol.shortcut === isProtocolToModalOpen
-              )}
-              isModalOpen={() => isProtocolModalOpen()}
-            />
-          )}
+          isModalOpen={() => isProtocolModalOpen()}
+        />
+      )}
       <StyledModalButton onClick={() => isOpenModal('')}>
         Zamknij
       </StyledModalButton>
