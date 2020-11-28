@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { MapInteractionCSS } from 'react-map-interaction';
 import styled, { css } from 'styled-components';
 
@@ -62,7 +63,7 @@ class ModelGSM extends Component {
     this.state = {
       value: {
         scale: 1,
-        translation: { x: 0, y: 0 }
+        translation: { x: 222, y: 15 }
       },
       translationBounds: {
         xMin: -500,
@@ -73,21 +74,28 @@ class ModelGSM extends Component {
     };
   }
 
+  componentDidMount() {
+    window.screen.width < 500 &&
+      this.setState({
+        value: { scale: 0.2, translation: { x: 16, y: 145 } }
+      });
+  }
+
   render() {
     const { scale, translation } = this.state;
     const { setCheckedItem, setCSSSearchItem } = this.props;
     return (
       <MapInteractionCSS
         value={this.state.value}
-        minScale="1"
+        minScale="0.2"
         onChange={value => {
           this.setState({ value });
         }}
       >
         <SVGModel
           value={setCSSSearchItem}
-          width="1850"
-          height="850"
+          width="1440"
+          height="890"
           viewBox="0 0 2315 1413"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -967,7 +975,7 @@ class ModelGSM extends Component {
                 width="141"
                 height="23"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="PSCoreLayer"
@@ -977,7 +985,7 @@ class ModelGSM extends Component {
                 width="111"
                 height="23"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="RegistersLayer"
@@ -987,7 +995,7 @@ class ModelGSM extends Component {
                 width="137"
                 height="23"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="CSCoreLayer"
@@ -997,7 +1005,7 @@ class ModelGSM extends Component {
                 width="119"
                 height="28"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="GeranLayer"
@@ -1007,7 +1015,7 @@ class ModelGSM extends Component {
                 width="119"
                 height="28"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 onClick={() => setCheckedItem('eUTRAN')}
@@ -1017,7 +1025,7 @@ class ModelGSM extends Component {
                 width="119"
                 height="28"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="LTELayer"
@@ -1027,7 +1035,7 @@ class ModelGSM extends Component {
                 width="59"
                 height="28"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 onClick={() => setCheckedItem('IMS')}
@@ -1037,7 +1045,7 @@ class ModelGSM extends Component {
                 width="59"
                 height="19"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
               <rect
                 id="UtranLayer"
@@ -1047,7 +1055,7 @@ class ModelGSM extends Component {
                 width="111"
                 height="28"
                 fill="#C4C4C4"
-                fill-opacity="0.02"
+                fillOpacity="0.02"
               />
             </g>
             <g id="S1-MME" onClick={() => setCheckedItem('S1-MME')}>
@@ -1855,7 +1863,6 @@ class ModelGSM extends Component {
               />
             </g>
             <g
-              className="HNB GW"
               className="circle"
               id="HNB GW"
               onClick={() => setCheckedItem('HNB GW')}
@@ -2740,4 +2747,10 @@ class ModelGSM extends Component {
     );
   }
 }
+
+ModelGSM.propTypes = {
+  setCheckedItem: PropTypes.object.isRequired,
+  setCSSSearchItem: PropTypes.object
+};
+
 export default ModelGSM;

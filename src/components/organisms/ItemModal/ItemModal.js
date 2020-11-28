@@ -17,6 +17,11 @@ const StyledWrapper = styled.div`
   z-index: 3;
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
+
+  @media (min-width: 310px) and (max-width: 430px) {
+    width: 100vw;
+    height: 100vh;
+  }
 `;
 
 const StyledHeadingName = styled(Heading)`

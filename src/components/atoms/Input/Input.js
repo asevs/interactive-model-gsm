@@ -8,8 +8,13 @@ const Input = styled.input`
   background-color: ${({ theme }) => theme.grey100};
   border: none;
   border-radius: 50px;
-  width: 13.5%;
+  width: 250px;
   outline: 0;
+  @media (min-width: 310px) and (max-width: 430px) {
+    width: 100%;
+    height: 40px;
+    margin: 0;
+  }
 
   ::placeholder {
     text-transform: uppercase;

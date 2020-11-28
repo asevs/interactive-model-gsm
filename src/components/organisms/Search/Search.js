@@ -130,8 +130,19 @@ function searchingFor(searchItem) {
   };
 }
 
+const StyledWrapper = styled.div`
+  position: absolute;
+  bottom: -6%;
+  left: 3;
+  width: 250px;
+  z-index: 2;
+  @media (min-width: 310px) and (max-width: 430px) {
+    width: 100%;
+    bottom: -15%;
+  }
+`;
+
 const SearchList = styled.ul`
-  padding: 0;
   list-style-type: none;
   position: absolute;
   margin: 0;
@@ -139,13 +150,14 @@ const SearchList = styled.ul`
   border: none;
   border-radius: 0 0 20px 20px;
   background-color: white;
-  width: 13.5%;
+  width: 100%;
   box-shadow: 0 0 1px 0.5px grey;
 `;
 
 const SearchListItem = styled.li`
   font-size: 1.8rem;
   padding: 0.5rem 0 0.5rem 1.5rem;
+  margin-left: -4rem;
   :hover {
     background-color: lightgrey;
     border: none;
@@ -158,7 +170,7 @@ const SearchListItem = styled.li`
 
 const SearchInput = styled(Input)`
   ${({ value }) =>
-    value.length >= 2 &&
+    value.length >= 1 &&
     css`
       border-radius: 20px 20px 0 0;
       box-shadow: 0 0 1px 0.5px ${({ theme }) => theme.grey100};
@@ -169,7 +181,7 @@ const Search = ({ setCheckedItem, setCSSSearchItem }) => {
   const [searchItem, setSearchItem] = useState('');
 
   return (
-    <>
+    <StyledWrapper>
       <SearchInput
         search
         value={searchItem}
@@ -197,7 +209,7 @@ const Search = ({ setCheckedItem, setCSSSearchItem }) => {
           ))}
         </SearchList>
       )}
-    </>
+    </StyledWrapper>
   );
 };
 

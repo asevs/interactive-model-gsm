@@ -7,6 +7,9 @@ const Button = styled.div`
   height: 64px;
   line-height: 64px;
   transition: all 0.3s;
+  @media (min-width: 300px) and (max-width: 340px) {
+    width: 156px;
+  }
   span {
     transition: all 0.3s;
     transform: scale(1, 1);

@@ -17,24 +17,32 @@ const StyledWrapper = styled.div`
 `;
 
 const StyledHeading = styled(Heading)`
-  position: absolute;
-  margin: 20% 0 0 5%;
   font-size: 6.3rem;
   color: white;
-  width: 50%;
+  position: absolute;
+  top: 40%;
+  margin-left: 10rem;
+
+  @media (min-width: 310px) and (max-width: 430px) {
+    font-size: 4.3rem;
+    top: 20%;
+    margin-left: 4rem;
+  }
 `;
 
 const StyledButton = styled(Button)`
   position: absolute;
-  margin: 40% 0 0 47%;
+  top: 85%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
 `;
 
 const ModelWrapper = styled(Element)`
   height: 100vh;
   width: 100vw;
   background-repeat: no-repeat;
-  padding: 2rem 0 3rem 1rem;
-  margin: 1rem 6rem 0 1rem;
+  margin: 1rem 0 0 0;
   ${({ styledBackground }) =>
     styledBackground &&
     css`
@@ -46,8 +54,16 @@ const ModelWrapper = styled(Element)`
     `};
 `;
 
-const StyledSearch = styled(Search)`
-  width: 13%;
+const ModelLegend = styled.div`
+  position: absolute;
+  width: 300px;
+  height: 250px;
+  background-color: ${({ theme }) => theme.grey100};
+  z-index: 1;
+  bottom: -100%;
+  left: 3;
+  border-radius: 30px;
+  padding: 2rem;
 `;
 
 class Home extends React.Component {
@@ -109,11 +125,15 @@ class Home extends React.Component {
           </Link>
         </StyledWrapper>
         {item.name && <ItemModal item={item} isOpenModal={this.checkItem} />}
-        <ModelWrapper id="model" styledBackground={checkedItem}>
-          <StyledSearch
+        <ModelWrapper
+          id="model"
+          styledBackground={checkedItem}
+        >
+          <Search
             setCheckedItem={this.checkItem}
             setCSSSearchItem={this.setCSSSearchItem}
           />
+          {window.screen.width > 1000 && <ModelLegend>dasdsa</ModelLegend>}
           <ModelGSM
             setCheckedItem={this.checkItem}
             setCSSSearchItem={searchCSSItem}
