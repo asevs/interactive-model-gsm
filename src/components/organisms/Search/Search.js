@@ -138,7 +138,7 @@ const StyledWrapper = styled.div`
   z-index: 2;
   @media (min-width: 310px) and (max-width: 430px) {
     width: 100%;
-    bottom: -15%;
+    bottom: -17%;
   }
 `;
 
@@ -215,7 +215,8 @@ const Search = ({ setCheckedItem, setCSSSearchItem }) => {
 
 Search.propTypes = {
   item: PropTypes.array.isRequired,
-  setCheckedItem: PropTypes.func
+  setCheckedItem: PropTypes.func,
+  setCSSSearchItem: PropTypes.func
 };
 
 export default Search;

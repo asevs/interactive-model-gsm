@@ -20,7 +20,8 @@ const StyledWrapper = styled.div`
 
   @media (min-width: 310px) and (max-width: 430px) {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
+    top: 160%;
   }
 `;
 

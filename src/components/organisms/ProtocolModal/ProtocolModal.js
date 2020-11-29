@@ -54,7 +54,9 @@ ProtocolModal.propTypes = {
   description: PropTypes.string,
   link: PropTypes.string,
   closeModal: PropTypes.func,
-  standardizationDocument: PropTypes.string
+  standardizationDocument: PropTypes.string,
+  protocol: PropTypes.object,
+  isModalOpen: PropTypes.func
 };
 
 export default ProtocolModal;
