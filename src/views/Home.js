@@ -58,7 +58,6 @@ const ModelWrapper = styled(Element)`
 const LegendWrapper = styled.div`
   position: absolute;
   width: 300px;
-  height: 250px;
   background-color: white;
   z-index: 1;
   bottom: -100%;

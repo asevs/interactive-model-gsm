@@ -18,6 +18,14 @@ const StyledWrapper = styled.div`
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
 
+  @media (min-width: 430px) and (max-width: 1000px) {
+    width: 60vw;
+  }
+
+  @media (min-width: 1001px) and (max-width: 1300px) {
+    width: 40vw;
+  }
+
   @media (min-width: 310px) and (max-width: 430px) {
     width: 100vw;
     height: 100%;
