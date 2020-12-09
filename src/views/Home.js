@@ -7,7 +7,7 @@ import ModelGSM from 'components/organisms/ModelGSM/ModelGSM';
 import { Link, Element } from 'react-scroll';
 import ItemModal from 'components/organisms/ItemModal/ItemModal';
 import API from '../utils/API';
-import Search from 'components/organisms/Search/Search';
+import Search from 'components/molecules/Search/Search';
 const StyledWrapper = styled.div`
   background-image: url(${background});
   background-repeat: no-repeat;
@@ -57,13 +57,13 @@ const ModelWrapper = styled(Element)`
 
 const LegendWrapper = styled.div`
   position: absolute;
-  width: 300px;
+  width: 350px;
   background-color: white;
   z-index: 1;
   bottom: -100%;
   left: 3;
   border-radius: 30px;
-  padding: 2rem;
+  padding: 1rem;
   display: block;
 `;
 
@@ -76,8 +76,8 @@ const StyledLine = styled.hr`
 
 const LegendItem = styled.div`
   display: inline-flex;
-  float: left;
-  margin: 0 0 1.5rem 0;
+  margin: 0.7rem auto 0 auto;
+  padding-left: 1rem;
 `;
 class Home extends React.Component {
   constructor(props) {
@@ -118,7 +118,7 @@ class Home extends React.Component {
 
   setCSSSearchItem = item => {
     this.setState({ searchCSSItem: item });
-    this.setMobileScroll(100);
+    this.setMobileScroll(1);
   };
 
   setMobileScroll = delay => {
@@ -155,19 +155,6 @@ class Home extends React.Component {
           {window.screen.width > 1000 && (
             <LegendWrapper>
               <LegendItem>
-                <StyledLine color={'009BA0'} />
-                Interfejs zewnętrzny
-              </LegendItem>
-              <LegendItem>
-                <StyledLine color={'00ADEF'} />
-                Interfejs wewnętrzny
-              </LegendItem>
-              <LegendItem>
-                <StyledLine color={'C7372D'} />
-                Interfejs ???
-              </LegendItem>
-
-              <LegendItem>
                 <svg
                   width="139"
                   height="58"
@@ -188,6 +175,24 @@ class Home extends React.Component {
                     fill="#231F20"
                   />
                 </svg>
+              </LegendItem>
+              <LegendItem>
+                <StyledLine color={'009BA0'} />
+                Interfejs zewnętrzny
+              </LegendItem>
+              <LegendItem>
+                <StyledLine color={'00ADEF'} />
+                Interfejs wewnętrzny
+              </LegendItem>
+              <LegendItem>
+                <StyledLine color={'C7372D'} />
+                Interfejs do opcjonalnych <br />
+                podsystemów usługowych
+              </LegendItem>
+              <LegendItem>
+                <StyledLine color={'000000'} />
+                Interfejs bezpośredniej <br />
+                komunikacji z internetem
               </LegendItem>
             </LegendWrapper>
           )}
