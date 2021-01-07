@@ -129,7 +129,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { item, checkedItem, searchCSSItem } = this.state;
+    const { item, searchCSSItem } = this.state;
 
     return (
       <>
@@ -146,8 +146,8 @@ class Home extends React.Component {
             <StyledButton>Zaczynajmy</StyledButton>
           </Link>
         </StyledWrapper>
-        {item.name && <ItemModal item={item} isOpenModal={this.checkItem} />}
-        <ModelWrapper id="model" styledBackground={checkedItem}>
+        {item.id && <ItemModal item={item} isOpenModal={this.checkItem} />}
+        <ModelWrapper id="model" styledBackground={item.name}>
           <Search
             setCheckedItem={this.checkItem}
             setCSSSearchItem={this.setCSSSearchItem}
