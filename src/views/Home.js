@@ -129,7 +129,7 @@ class Home extends React.Component {
   };
 
   render() {
-    const { item, searchCSSItem } = this.state;
+    const { item, searchCSSItem, text } = this.state;
 
     return (
       <>
