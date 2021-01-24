@@ -68,11 +68,9 @@ const StyledModalButton = styled(ModalButton)`
 `;
 
 const ProtocolsList = styled.ul`
-  margin: 8rem auto 0 auto;
+  margin: 0 auto 0 auto;
   list-style-type: none;
-  width: 60%;
   padding: 0;
-  height: 200px;
   overflow-y: auto;
 
   ::-webkit-scrollbar-track {
@@ -94,19 +92,62 @@ const ProtocolsList = styled.ul`
 
 const Protocol = styled.li`
   text-align: center;
-  font-size: 3rem;
+  font-size: 1.7rem;
   background-color: #f8f8f8;
   :hover {
     cursor: pointer;
     background-color: gray;
   }
-  ${({ id }) =>
-    id % 2 === 0 &&
+  ${({ priority }) =>
+    priority === 1 &&
     css`
-      background-color: #eeeeee;
+      background-color: #35cccc;
+    `};
+  ${({ priority }) =>
+    priority === 2 &&
+    css`
+      background-color: #0dffff;
+    `};
+  ${({ priority }) =>
+    priority === 3 &&
+    css`
+      background-color: #ccffff;
+    `};
+  ${({ priority }) =>
+    priority === 4 &&
+    css`
+      background-color: #cbffcd;
+    `};
+  ${({ priority }) =>
+    priority === 5 &&
+    css`
+      background-color: #1bccff;
+    `};
+  ${({ priority }) =>
+    priority === 6 &&
+    css`
+      background-color: #fdff9b;
+    `};
+  ${({ priority }) =>
+    priority === 7 &&
+    css`
+      background-color: #cbffcd;
+    `};
+  ${({ priority }) =>
+    priority === 8 &&
+    css`
+      background-color: #fdff21;
     `};
 `;
 
+const Table = styled.table`
+  margin: 5rem auto 0 auto;
+  border-width: 0;
+  padding: 0;
+`;
+
+const Td = styled.td``;
+const Tr = styled.tr``;
 const ItemModal = ({ item, isOpenModal }) => {
   const [isProtocolToModalOpen, setProtocolToModalOpen] = useState();
 
@@ -119,24 +160,86 @@ const ItemModal = ({ item, isOpenModal }) => {
       <StyledHeadingName big>{item.name}</StyledHeadingName>
       <Description>{item.description}</Description>
 
-      {item.protocols.length != 0 && (
-        <ProtocolsList protocols={item.protocols}>
-          {item.protocols.map(protocol => (
-            <Protocol
-              onClick={() => setProtocolToModalOpen(protocol.shortcut)}
-              id={item.protocols.indexOf(protocol)}
-              key={protocol.shortcut}
-            >
-              {protocol.shortcut}
-            </Protocol>
-          ))}
-        </ProtocolsList>
+      {item.controlProtocols != 0 && (
+        <Table>
+          <thead>
+            <tr>
+              {item.controlProtocols != 0 && <th>Control plane</th>}
+              {item.userProtocols != 0 && <th>User plane</th>}
+              {item.transportProtocols != 0 && <th>Transport Control Plane</th>}
+            </tr>
+          </thead>
+          <tbody>
+            <Tr>
+              {item.controlProtocols != 0 && (
+                <Td>
+                  <ProtocolsList protocols={item.controlProtocols}>
+                    {item.controlProtocols.map(protocol => (
+                      <Protocol
+                        onClick={() => setProtocolToModalOpen(protocol)}
+                        priority={protocol.priority}
+                        key={protocol.shortcut}
+                      >
+                        {protocol.shortcut}
+                      </Protocol>
+                    ))}
+                  </ProtocolsList>
+                </Td>
+              )}
+              {item.userProtocols != 0 && (
+                <Td>
+                  <ProtocolsList protocols={item.userProtocols}>
+                    {item.userProtocols.map(protocol => (
+                      <Protocol
+                        onClick={() => setProtocolToModalOpen(protocol)}
+                        priority={protocol.priority}
+                        key={protocol.shortcut}
+                      >
+                        {protocol.shortcut}
+                      </Protocol>
+                    ))}
+                  </ProtocolsList>
+                </Td>
+              )}
+              {item.transportProtocols != 0 && (
+                <Td>
+                  <ProtocolsList protocols={item.transportProtocols}>
+                    {item.transportProtocols.map(protocol => (
+                      <Protocol
+                        onClick={() => setProtocolToModalOpen(protocol)}
+                        priority={protocol.priority}
+                        key={protocol.shortcut}
+                      >
+                        {protocol.shortcut}
+                      </Protocol>
+                    ))}
+                  </ProtocolsList>
+                </Td>
+              )}
+            </Tr>
+            <Tr>
+              {item.allProtocols != 0 && (
+                <Td colSpan="3">
+                  <ProtocolsList protocols={item.allProtocols}>
+                    {item.allProtocols.map(protocol => (
+                      <Protocol
+                        onClick={() => setProtocolToModalOpen(protocol)}
+                        priority={protocol.priority}
+                        key={protocol.shortcut}
+                      >
+                        {protocol.shortcut}
+                      </Protocol>
+                    ))}
+                  </ProtocolsList>
+                </Td>
+              )}
+            </Tr>
+          </tbody>
+        </Table>
       )}
       {isProtocolToModalOpen != null && (
         <ProtocolModal
-          protocol={item.protocols.filter(
-            protocol => protocol.shortcut === isProtocolToModalOpen
-          )}
+          protocol={isProtocolToModalOpen}
           isModalOpen={() => isProtocolModalOpen()}
         />
       )}

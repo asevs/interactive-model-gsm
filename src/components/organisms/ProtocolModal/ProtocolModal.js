@@ -46,10 +46,10 @@ const StyledModalButton = styled(ModalButton)`
 
 const ProtocolModal = ({ protocol, isModalOpen }) => (
   <StyledWrapper>
-    <StyledHeadingName big>{protocol[0].name}</StyledHeadingName>
-    <Description>{protocol[0].description}</Description>
-    <a href={protocol[0].link} target="_blank" rel="noopener noreferrer">
-      {protocol[0].standardizationDocument}
+    <StyledHeadingName big>{protocol.name}</StyledHeadingName>
+    <Description>{protocol.description}</Description>
+    <a href={protocol.link} target="_blank" rel="noopener noreferrer">
+      {protocol.standardizationDocument}
     </a>
 
     <StyledModalButton onClick={() => isModalOpen()}>Zamknij</StyledModalButton>
