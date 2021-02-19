@@ -87,7 +87,7 @@ class ModelGSM extends Component {
     return (
       <MapInteractionCSS
         value={this.state.value}
-        minScale="0.2"
+        minScale={0.2}
         onChange={value => {
           this.setState({ value });
         }}
@@ -2749,8 +2749,13 @@ class ModelGSM extends Component {
 }
 
 ModelGSM.propTypes = {
-  setCheckedItem: PropTypes.object.isRequired,
-  setCSSSearchItem: PropTypes.object
+  setCheckedItem: PropTypes.func,
+  setCSSSearchItem: PropTypes.object,
+  minScale: PropTypes.number,
+  maxScale: PropTypes.number,
+  value: PropTypes.object,
+  scale: PropTypes.number,
+  translation: PropTypes.object
 };
 
 export default ModelGSM;

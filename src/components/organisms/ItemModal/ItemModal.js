@@ -158,7 +158,9 @@ const ItemModal = ({ item, isOpenModal }) => {
   return (
     <StyledWrapper>
       <StyledHeadingName big>{item.name}</StyledHeadingName>
-      <Description>{item.description}</Description>
+      <Description>
+        {item.description !== null ? item.description : `Brak danch`}
+      </Description>
 
       {item.controlProtocols != 0 && (
         <Table>

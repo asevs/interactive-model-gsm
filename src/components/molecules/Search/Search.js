@@ -214,7 +214,7 @@ const Search = ({ setCheckedItem, setCSSSearchItem }) => {
 };
 
 Search.propTypes = {
-  item: PropTypes.array.isRequired,
+  item: PropTypes.array,
   setCheckedItem: PropTypes.func,
   setCSSSearchItem: PropTypes.func
 };
