@@ -145,8 +145,8 @@ class Home extends React.Component {
           >
             <StyledButton>Zaczynajmy</StyledButton>
           </Link>
+          {item.id && <ItemModal item={item} isOpenModal={this.checkItem} />}
         </StyledWrapper>
-        {item.id && <ItemModal item={item} isOpenModal={this.checkItem} />}
         <ModelWrapper id="model" styledBackground={item.name}>
           <Search
             setCheckedItem={this.checkItem}

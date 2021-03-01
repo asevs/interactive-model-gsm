@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import ProtocolModal from 'components/organisms/ProtocolModal/ProtocolModal';
 
 const StyledWrapper = styled.div`
-  top: 150%;
+  top: 150vh;
   transform: translateY(-50%);
   left: 0;
   right: 0;
@@ -17,6 +17,7 @@ const StyledWrapper = styled.div`
   z-index: 3;
   padding: 0 4vw 0 4vw;
   box-shadow: 0 0 10px 0.5px black;
+  zoom: 1;
 
   @media (min-width: 430px) and (max-width: 1000px) {
     width: 60vw;
